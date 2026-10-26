@@ -1,0 +1,50 @@
+apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.kotlin.android"
+
+/**
+ * Isolated build for whisper.cpp. It vendors its own ggml copy, so it lives in
+ * its own Gradle module: combining whisper.cpp and llama.cpp in one CMake tree
+ * would register duplicate ggml targets.
+ */
+android {
+    namespace "com.dayloom.whisper"
+    compileSdk rootProject.ext.compileSdkVersion
+    ndkVersion rootProject.ext.ndkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        ndk {
+            abiFilters "arm64-v8a", "x86_64"
+        }
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_STL=c++_shared"
+                cppFlags "-O3 -DNDEBUG -fexceptions -frtti"
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+            version rootProject.ext.cmakeVersion
+        }
+    }
+
+    buildTypes {
+        release {
+            ndk {
+                abiFilters "arm64-v8a"
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- A sun over woven threads: the "loom" mark. -->
+    <path
+        android:fillColor="#FFF7F3EA"
+        android:pathData="M54,32a13,13 0,1 0,0 26a13,13 0,0 0,0 -26z" />
+    <path
+        android:fillColor="#FFF7F3EA"
+        android:pathData="M32,62h44v4h-44z" />
+    <path
+        android:fillColor="#CCF7F3EA"
+        android:pathData="M32,70h44v3h-44z" />
+    <path
+        android:fillColor="#99F7F3EA"
+        android:pathData="M32,76h44v3h-44z" />
+</vector>

@@ -1,0 +1,43 @@
+node_modules/
+npm-debug.log
+yarn-error.log
+*.tsbuildinfo
+
+# Android build output
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.cxx/
+android/app/.cxx/
+android/app/release/
+# Native library modules (llama, whisper) produce their own build/ and .cxx/
+android/*/build/
+android/*/.cxx/
+*.apk
+*.aab
+*.keystore
+!android/app/debug.keystore
+
+# Native model sources pulled in by CMake from these pinned checkouts
+android/app/src/main/cpp/third_party/whisper.cpp/
+android/app/src/main/cpp/third_party/llama.cpp/
+
+# Model weights: never committed. Fetched and hash-verified by scripts/fetch-models.mjs
+android/app/src/main/assets/models/**/*.bin
+# The required offline Whisper Tiny model is bundled in the release APK.
+!android/app/src/main/assets/models/ggml-tiny.bin
+android/app/src/main/assets/models/**/*.gguf
+android/app/src/main/assets/models/**/*.onnx
+*.gguf
+
+# Local tooling
+.idea/
+.vscode/
+.DS_Store
+coverage/
+
+# Local-only Android build toolchains
+.toolchains/
+.android-sdk/
+.cache/build-tools/

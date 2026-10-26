@@ -1,0 +1,9 @@
+<resources>
+    <color name="paper">#14130F</color>
+    <color name="ink">#EDE7DA</color>
+    <color name="ink_muted">#A39C8E</color>
+    <color name="terracotta">#D97757</color>
+    <color name="sage">#93A487</color>
+    <color name="line">#34312A</color>
+    <color name="card">#1C1A15</color>
+</resources>

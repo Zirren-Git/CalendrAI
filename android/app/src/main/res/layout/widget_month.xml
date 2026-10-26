@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/widget_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal">
+
+        <TextView style="@style/WidgetWeekday" android:text="M" />
+        <TextView style="@style/WidgetWeekday" android:text="T" />
+        <TextView style="@style/WidgetWeekday" android:text="W" />
+        <TextView style="@style/WidgetWeekday" android:text="T" />
+        <TextView style="@style/WidgetWeekday" android:text="F" />
+        <TextView style="@style/WidgetWeekday" android:text="S" />
+        <TextView style="@style/WidgetWeekday" android:text="S" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/month_rows"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:orientation="vertical" />
+</LinearLayout>

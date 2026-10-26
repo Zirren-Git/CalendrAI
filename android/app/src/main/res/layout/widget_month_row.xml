@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/day_0"
+        style="@style/WidgetMonthCell" />
+    <TextView
+        android:id="@+id/day_1"
+        style="@style/WidgetMonthCell" />
+    <TextView
+        android:id="@+id/day_2"
+        style="@style/WidgetMonthCell" />
+    <TextView
+        android:id="@+id/day_3"
+        style="@style/WidgetMonthCell" />
+    <TextView
+        android:id="@+id/day_4"
+        style="@style/WidgetMonthCell" />
+    <TextView
+        android:id="@+id/day_5"
+        style="@style/WidgetMonthCell" />
+    <TextView
+        android:id="@+id/day_6"
+        style="@style/WidgetMonthCell" />
+</LinearLayout>

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Dayloom</string>
+    <string name="widget_agenda_name">Dayloom agenda</string>
+    <string name="widget_month_name">Dayloom month</string>
+    <string name="widget_tasks_name">Dayloom tasks</string>
+    <string name="widget_focus_name">Dayloom focus</string>
+    <string name="widget_capture_name">Dayloom capture</string>
+    <string name="widget_empty_agenda">Nothing scheduled today</string>
+    <string name="widget_empty_tasks">No open tasks</string>
+    <string name="widget_no_focus">No focus session</string>
+    <string name="widget_open_hint">Tap to open Dayloom</string>
+    <string name="reminder_channel_name">Reminders</string>
+    <string name="reminder_channel_description">Event and task reminders from Dayloom</string>
+    <string name="mic_permission_rationale">Dayloom records only while you hold the microphone button. Audio never leaves the device.</string>
+</resources>

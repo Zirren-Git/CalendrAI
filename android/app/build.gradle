@@ -1,0 +1,116 @@
+import java.util.Properties
+
+apply plugin: "com.android.application"
+apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "com.facebook.react"
+
+react {
+    autolinkLibrariesWithApp()
+}
+
+def enableProguardInReleaseBuilds = true
+def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
+
+/**
+ * Release signing is read from android/keystore.properties when it exists
+ * (never committed). Without it, release builds use the debug keystore so a
+ * local verification build is possible; that APK is not distributable.
+ */
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+    ndkVersion rootProject.ext.ndkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk rootProject.ext.compileSdkVersion
+
+    namespace "com.dayloom"
+    defaultConfig {
+        applicationId "com.dayloom"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0.0"
+        ndk {
+            abiFilters "arm64-v8a", "x86_64"
+        }
+        // Keep the crash surface small: no multidex, no exotic flags.
+        resConfigs "en"
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+        if (keystorePropertiesFile.exists()) {
+            release {
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            // arm64 only for distribution; the emulator ABI stays in debug.
+            ndk {
+                abiFilters "arm64-v8a"
+            }
+            signingConfig keystorePropertiesFile.exists() ? signingConfigs.release : signingConfigs.debug
+            minifyEnabled enableProguardInReleaseBuilds
+            shrinkResources enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    packagingOptions {
+        jniLibs {
+            // Legacy packaging keeps the .so files uncompressed, which is what
+            // Android expects for 16 KB page-size aligned libraries.
+            useLegacyPackaging = false
+        }
+        resources {
+            excludes += ["META-INF/*.kotlin_module"]
+        }
+    }
+
+    // Model weights are native assets, not Metro assets. Keeping them out of
+    // the JS bundle avoids a duplicate copy on disk.
+    androidResources {
+        noCompress += ["bin", "gguf"]
+    }
+}
+
+dependencies {
+    implementation("com.facebook.react:react-android")
+    // Local inference modules. Each builds its own pinned upstream copy.
+    implementation project(":whisper")
+    implementation project(":llama")
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+
+    if (hermesEnabled.toBoolean()) {
+        implementation("com.facebook.react:hermes-android")
+    } else {
+        implementation jscFlavor
+    }
+}

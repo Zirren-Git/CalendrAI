@@ -1,0 +1,11 @@
+pluginManagement { includeBuild("../node_modules/@react-native/gradle-plugin") }
+plugins { id("com.facebook.react.settings") }
+extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
+rootProject.name = 'Dayloom'
+include ':app'
+// Whisper and llama.cpp each vendor their own copy of ggml. Building them in
+// separate Gradle modules keeps the two CMake trees isolated; sharing one tree
+// would produce duplicate ggml targets.
+include ':whisper'
+include ':llama'
+includeBuild('../node_modules/@react-native/gradle-plugin')

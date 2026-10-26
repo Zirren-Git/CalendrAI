@@ -1,0 +1,21 @@
+# Model asset register
+
+Manifest: `src/models/manifest.ts`. Digests/sizes below are enforced by the model manager. Source URLs for Whisper Tiny/Base/Small, TinyLlama and Phi-3 now use immutable Hugging Face commit revisions; the digest additionally checks content. The in-app downloader only accepts HTTPS and the configured Hugging Face hosts.
+
+| Model | Purpose / size | Source and SHA-256 | License and redistribution | Status |
+|---|---:|---|---|---|
+| Whisper Tiny (`ggml-tiny.bin`) | Offline speech-to-text; 77,691,713 bytes (~74 MiB) | `ggerganov/whisper.cpp`, commit `80da2d8bfee42b0e836fc3a9890373e5defc00a6`; `be07e048e1e599ad46341c8d2a135645097a538221678b7acdd1b1919c6e1b21` | MIT for whisper.cpp conversion and OpenAI Whisper weights; retain notices/attribution. | Present in local workspace, SHA-256 and exact byte size checked. It is intentionally included in Git/release despite `.gitignore`, so a normal release has first-run offline speech. It increases APK size by about 74 MiB before compression. Device inference is not yet verified. |
+| Whisper Base (`ggml-base.bin`) | Optional multilingual transcription; 147,951,465 bytes (~141 MiB) | `ggerganov/whisper.cpp`, commit `80da2d8bfee42b0e836fc3a9890373e5defc00a6`; `60ed5bc3dd14eea856493d334349b405782ddcaf0028d4b5df4088345fba2efe` | MIT; retain notices/attribution. | Catalogued for explicit in-app download; not bundled/tested on device. |
+| Whisper Small (`ggml-small.bin`) | Optional multilingual transcription; 487,601,967 bytes (~465 MiB) | `ggerganov/whisper.cpp`, commit `80da2d8bfee42b0e836fc3a9890373e5defc00a6`; `1be3a9b2063867b937e64e2ec7483364a79917e157fa98c5d94b5c1fffea987b` | MIT; retain notices/attribution. | Catalogued for explicit in-app download; not bundled/tested on device. |
+| TinyLlama 1.1B Chat Q4_K_M | Optional local LLM; 668,788,096 bytes (~638 MiB) | TheBloke GGUF repository, commit `c1d7cb837a660d93ba28f936efb148591bfba3e9`; `9fecc3b3cd76bba89d504f29b616eedf7da85b96540e490ca5824d3f7d2776a0` | Apache-2.0 is indicated for TinyLlama; preserve license, attribution and any conversion notices. | Catalogued; not bundled/tested on device. |
+| Phi-3 Mini 4K Instruct Q4 | Optional local LLM; 2,393,231,072 bytes (~2.23 GiB) | Microsoft GGUF repository, commit `c80d904a71b99a3eaeb8d3dbf164166384c09dc3`; `8a83c7fb9049a9b2e92266fa7ad04933bb53aa1e85136b7b30f1b8000ff2edef` | MIT for Phi-3; retain notices, including applicable notices in the GGUF repository. | Catalogued; host access is gated. User-initiated unauthenticated download can fail. This model needs several GiB of RAM; not device-verified. |
+| Gemma 2B Q4 | N/A | No downloadable GGUF/hash verified | Gemma Terms are gated; redistribution/download requirements cannot be met without authorization. | Deliberately shown as unavailable; not offered. |
+
+The licensed source check used upstream pages for [OpenAI Whisper](https://github.com/openai/whisper), [whisper.cpp models](https://github.com/ggml-org/whisper.cpp/blob/master/models/README.md), [TinyLlama](https://github.com/jzhang38/TinyLlama), [TheBloke GGUF](https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF), and [Microsoft Phi-3 GGUF](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf). This is a license-source review, not legal advice. Offered model source revisions are immutable commit links.
+
+## Important implementation verification gaps
+
+- Base and Small Whisper weights, optional GGUF weights, and model manager download behavior have not been exercised against live hosts/device storage in an installed Android app.
+- The app's native download implementation uses a Kotlin `HttpURLConnection` path. It restricts source/redirect hosts and validates Content-Range, but those paths remain untested against real Android networking.
+- Bundled asset copying runs in native code; the TypeScript model manager independently checks exact size and SHA-256 and removes a failed asset before writing its sidecar. Android execution of this path remains untested.
+- NER, MiniLM, and ONNX Runtime are not included: the app's offline command understanding is deterministic rules/date parsing, not an ONNX model. This is intentional and honest rather than claiming unused model runtimes.

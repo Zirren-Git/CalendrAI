@@ -1,0 +1,28 @@
+buildscript {
+    ext {
+        buildToolsVersion = "37.0.0"
+        // Dayloom supports Android 7.0 (API 24) and up. API 24 is the floor for
+        // the platform ICU/Intl timezone data the calendar relies on.
+        minSdkVersion = 24
+        compileSdkVersion = 37
+        targetSdkVersion = 36
+        // NDK 27.1 is the first RN-supported NDK that produces 16 KB
+        // page-size aligned native libraries by default.
+        ndkVersion = "27.1.12297006"
+        kotlinVersion = "2.2.0"
+        // Match React Native 0.88's version catalog for reproducible builds.
+        agpVersion = "9.2.1"
+        cmakeVersion = "3.22.1"
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:${agpVersion}")
+        classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+    }
+}
+
+apply plugin: "com.facebook.react.rootproject"

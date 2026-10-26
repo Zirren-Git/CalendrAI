@@ -1,0 +1,18 @@
+{
+  "extends": "@react-native/typescript-config",
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": false,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowJs": false,
+    "skipLibCheck": true,
+    "types": ["jest", "react-native", "node"]
+  },
+  "include": ["index.js", "src/**/*.ts", "src/**/*.tsx", "App.tsx", "scripts/**/*.mjs"],
+  "exclude": ["node_modules", "android", "ios", "**/*.test.ts"]
+}

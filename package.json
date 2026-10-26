@@ -1,0 +1,88 @@
+{
+  "name": "dayloom",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Dayloom — an offline-first Android calendar, tasks and focus app with on-device voice commands.",
+  "engines": {
+    "node": ">=22.11.0"
+  },
+  "scripts": {
+    "android": "react-native run-android",
+    "start": "react-native start",
+    "bundle:android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "models:fetch": "node scripts/fetch-models.mjs",
+    "models:bundled": "node scripts/fetch-models.mjs --bundled"
+  },
+  "dependencies": {
+    "@op-engineering/op-sqlite": "18.2.5",
+    "@react-navigation/native": "7.5.1",
+    "@react-navigation/native-stack": "7.21.0",
+    "react": "19.3.0",
+    "react-native": "0.88.0",
+    "react-native-safe-area-context": "5.10.1",
+    "react-native-screens": "4.30.0",
+    "zod": "4.6.7",
+    "zustand": "5.0.16"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/plugin-transform-export-namespace-from": "^7.29.7",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/preset-typescript": "^7.29.7",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-community/cli": "20.2.0",
+    "@react-native-community/cli-platform-android": "20.2.0",
+    "@react-native/babel-preset": "0.88.0",
+    "@react-native/jest-preset": "0.88.0",
+    "@react-native/metro-config": "0.88.0",
+    "@react-native/typescript-config": "0.88.0",
+    "@types/jest": "^29.5.13",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.2.0",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "typescript": "6.0.3"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.test.ts"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx|js|jsx)$": [
+        "babel-jest",
+        {
+          "presets": [
+            [
+              "@babel/preset-env",
+              {
+                "targets": {
+                  "node": "current"
+                }
+              }
+            ],
+            "@babel/preset-typescript"
+          ]
+        }
+      ]
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/android/"
+    ],
+    "collectCoverageFrom": [
+      "src/domain/**/*.ts",
+      "src/agent/**/*.ts",
+      "src/db/**/*.ts",
+      "src/models/**/*.ts"
+    ]
+  }
+}

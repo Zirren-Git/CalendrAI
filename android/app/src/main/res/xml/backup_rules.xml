@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Model weights are excluded from Android auto-backup: they are large,
+  re-downloadable, and should never ride along with user data. Recordings are
+  excluded for privacy. The SQLite database is included so a device restore
+  keeps the user's calendar; see docs/privacy.md.
+-->
+<full-backup-content>
+    <include domain="database" path="." />
+    <include domain="file" path="dayloom-backups" />
+    <exclude domain="file" path="models" />
+    <exclude domain="file" path="recordings" />
+    <exclude domain="sharedpref" path="dayloom-models.xml" />
+    <exclude domain="cache" path="." />
+</full-backup-content>
